@@ -27,11 +27,9 @@ var Files = [{
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
             });
-            //keymaster('esc', this.handleNext);
             window.document.onkeydown = this.handleKeyDown;
         },
         componentWillUnmount: function() {
-            //Keymaster.keymaster.unbind('esc', this.onClose);
         },
         handleKeyDown: function(event) {
             if (event.keyCode == '37') {

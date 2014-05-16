@@ -1,0 +1,7 @@
+{
+    "name": "qrui",
+    "version": "0.0.0",
+    "dependencies": {
+        "bootstrap": "git://github.com/twbs/bootstrap.git#3.1.1"
+    }
+}

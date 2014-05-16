@@ -1,0 +1,247 @@
+@import "bower_components/bootstrap/less/bootstrap.less";
+
+a.csv {
+    padding-left: 20px;
+    margin-left: 2px;
+}
+
+#session-status {
+    float: right;
+}
+
+table {
+    margin: 10px;
+}
+
+tr.odd {
+    background-color: #EEEEEE;
+}
+
+tr.even {
+    background-color: white;
+}
+
+th {
+    /*text-align: left;*/
+    vertical-align: bottom;
+    font-weight: normal;
+    background-color: #cccccc;
+}
+
+th#bag {
+    width: 35%;
+}
+
+th#added {
+    width: 15%;
+}
+
+th#samples {
+    width: 5%;
+}
+
+th#flaws {
+    width: 5%;
+}
+
+th#checked {
+    width: 25%;
+}
+
+th#status {
+    width: 15%;
+}
+
+td {
+    vertical-align: top;
+    padding-right: 5px;
+}
+
+td.status form {
+    text-align: center;
+}
+
+#bag_list {
+    width: 100%;
+    margin: auto;
+}
+
+#add_bag {
+    margin: 20px;
+    text-align: center;
+}
+
+#bag_info {
+    float: left;
+    margin-top: 20px;
+    padding: 10px;
+    border: thin #eeeeee solid;
+    width: 35%;
+}
+
+#bag_samples {
+    float: right;
+    margin-top: 20px;
+    padding: 10px; 
+    border: thin #eeeeee solid;
+    width: 60%;
+}
+
+#sample_summary {
+    float: left;
+    vertical-align: top;
+}
+
+#sample_results {
+    padding-left: 50%;
+}
+
+#sample_files {
+    width: 95%;
+}
+
+#sample_file_details {
+    clear: both;
+}
+
+td.check {
+    text-align: center;
+}
+
+#login {
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 10%;
+    margin-bottom: 20%;
+    padding: 30px;
+    width: 40%;
+    text-align: center;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px; 
+}
+
+#login table {
+    margin: auto;
+}
+
+#image_viewer {
+    margin-top: 15px;
+    margin-right: 10px;
+    text-align: center;
+    float: left;
+    min-height: 700px;
+}
+
+#image_panel {
+    margin-top: 15px;
+}
+
+.tip {
+    color: gray;
+}
+
+nav {
+    margin-top: 2px; 
+    margin-bottom: 8px;
+}
+
+.pages {
+    text-align: center;
+    height: 20px;
+}
+
+.page_link {
+    background-color: white;
+    padding: 1px;
+    text-decoration: none;
+}
+
+.page_link a {
+    text-decoration: none;
+    color: black;
+}
+
+.page_link a:visited {
+    color: black;
+}
+
+.current_page {
+    font-weight: bold;
+    color: black;
+}
+
+.bag_status {
+    font-style: italic;
+}
+
+#project_switch {
+    display: inline-block;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    margin: 5px;
+}
+
+div#content {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 10pt;
+}
+
+#lightbox {
+    margin-top: 25px;
+}
+
+a.button_link {
+    text-decoration: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+.foo {
+    height: 100%;
+    .image {
+        position: fixed;
+        top: 75px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        margin: auto;
+        background-color: @gray-light;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat no-repeat;
+    }
+
+    .previous, .next {
+        position: fixed;
+        width: 50px;
+        height: 75px;
+        text-align: center;
+        vertical-align: middle;
+        left: 0px;
+        right: 0px;
+        display: table-cell;
+    }
+    .previous {
+        margin: auto auto auto 5px;        
+    }
+    .next {
+        margin: auto 5px auto auto;         
+    }
+    .current {
+        position: fixed;
+        width: 50%;
+        height: 75px;
+        text-align: center;
+        margin: 5px auto;
+        left: 0px;
+        right: 0px;
+    }
+}
+

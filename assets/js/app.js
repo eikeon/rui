@@ -2,6 +2,8 @@
 
 var React = require('react'),
     ItemNumber = require('./itemnumber'),
+    Previous = require('./previous'),
+    Next = require('./next'),
     $     = require('jquery'),    
     App;
 
@@ -20,7 +22,7 @@ var Files = [{
                 url: this.props.url,
                 dataType: 'json',
                 success: function(data) {
-                    var files = data["files"];
+                    var files = data.files;
                     this.setState({files: files, file: files[0]});
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -39,42 +41,50 @@ var Files = [{
                 this.handleNext(event);
             }
         },
+        handleItemChanged: function(item) {
+            this.state.file = item;
+            this.setState(this.state);
+        },
         handleNext: function(event) {
             var i = this.state.files.indexOf(this.state.file);
-            var n = this.state.files.length;
-            this.state.file = this.state.files[(i+1+n)%n];
-            this.setState(this.state);            
+            if (i<this.state.files.length-1) {
+                this.handleItemChanged(this.state.files[i+1]);
+            }
         },        
         handlePrevious: function(event) {
             var i = this.state.files.indexOf(this.state.file);
-            var n = this.state.files.length;            
-            this.state.file = this.state.files[(i-1+n)%n];
-            this.setState(this.state);
+            if (i>0) {
+                this.handleItemChanged(this.state.files[i-1]);
+            }
         },
-        render: function () {
-            var current = this.state.files.indexOf(this.state.file);
-            var total = this.state.files.length;
+        prefetch: function() {
             if(typeof window == 'undefined') {
             } else {
                 $.get(this.state.file.image_large);
-                $.get(this.state.files[(current+1+total)%total].image_large);
-                $.get(this.state.files[(current-1+total)%total].image_large);
+                var i = this.state.files.indexOf(this.state.file);
+                if (i>0) {
+                    $.get(this.state.files[i-1].image_large);
+                } else if (i<this.state.files.length-1) {
+                    $.get(this.state.files[i+1].image_large);
+                }
             }
+        },
+        render: function () {
+            this.prefetch();
             var fs = {backgroundImage: "url("+this.state.file.image_large+")"};
             return <div className="foo">
-                <div className="image" style={fs}>
-                </div>
-                <div className="previous">
-                  <h1><a onClick={this.handlePrevious} rel="previous"><span className="glyphicon glyphicon-chevron-left"></span></a></h1>
-                </div>
-                <div className="current">
-                  <ItemNumber file={this.state.file} files={this.state.files} />
-                </div>
-                <div className="next" onClick={this.handleNext}>
-                  <h1><a rel="next"><span className="glyphicon glyphicon-chevron-right"></span></a></h1>
-                </div>
-                
-                </div>;
+                     <div className="image" style={fs}>
+                     </div>
+                     <div className="previous">
+                       <h1><Previous onItemChanged={this.handleItemChanged} item={this.state.file} items={this.state.files} /></h1>
+                     </div>
+                     <div className="current">
+                       <ItemNumber file={this.state.file} files={this.state.files} />
+                     </div>
+                     <div className="next">
+                       <h1><Next onItemChanged={this.handleItemChanged} item={this.state.file} items={this.state.files} /></h1>
+                     </div>
+                   </div>;
     }
 });
 

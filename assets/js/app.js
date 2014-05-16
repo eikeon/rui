@@ -17,9 +17,7 @@ var Files = [{
         },
         componentDidMount: function () {            
             $.ajax({
-                //url: this.props.url,
-                url: "http://sampler.rdc.lctl.gov/api/sample/39790",
-                //url: "/api/sample/39790.json",                
+                url: this.props.url,
                 dataType: 'json',
                 success: function(data) {
                     var files = data["files"];
@@ -83,7 +81,7 @@ var Files = [{
 });
 
 App.start = function () {
-    React.renderComponent(<App/>, document.getElementById('app'));
+    React.renderComponent(<App url="http://sampler.rdc.lctl.gov/api/sample/39790"/>, document.getElementById('app'));
 };
 
 if(typeof window == 'undefined') {

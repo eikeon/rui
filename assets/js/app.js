@@ -115,4 +115,5 @@ if(typeof window == 'undefined') {
     module.exports = Site;
 } else {
     module.exports = window.Site = Site;
+    window.React = React;
 }

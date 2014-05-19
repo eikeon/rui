@@ -10,16 +10,16 @@
   "license": "CC0",
   "devDependencies": {
     "connect": "^2.16.2",
-    "envify": "~1.2.0",
-    "gulp": "~3.6.0",
-    "gulp-browserify": "~0.5.0",
-    "gulp-concat": "~2.2.0",
-    "gulp-imagemin": "~0.5.0",
+    "envify": "^1.2.1",
+    "gulp": "^3.6.2",
+    "gulp-browserify": "^0.5.0",
+    "gulp-concat": "^2.2.0",
+    "gulp-imagemin": "^0.5.0",
     "gulp-less": "^1.2.3",
     "gulp-react": "^0.3.3",
-    "jquery": "~2.1.0",
-    "react": "~0.10.0",
-    "reactify": "~0.13.1"
+    "jquery": "^2.1.1",
+    "react": "^0.10.0",
+    "reactify": "^0.13.1"
   },
   "dependencies": {
     "node-jsx": "^0.10.0",

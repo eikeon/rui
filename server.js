@@ -6,23 +6,10 @@ var http = require('http'),
     React = require('react'),
     MyApp = require('./assets/js/app.js');
 
-var fs = require('fs'),
-    Handlebars = require('handlebars'),
-    template;
-
-fs.readFile('./site.html', 'utf8', function (err, data) {
-  if (err) {
-    return console.log(err);
-  }
-  template = Handlebars.compile(data);
-});
-
-
 exports = module.exports = function (req, res) {
     if (req.url == '/') {
         res.setHeader('Content-Type', 'text/html');
-        var app = new Handlebars.SafeString(React.renderComponentToStaticMarkup(MyApp({})));
-        res.end(template({"app": app}));
+        res.end("<!DOCTYPE html>" + React.renderComponentToStaticMarkup(MyApp({})));
     } else {
         send(req, url.parse(req.url).pathname, {root: './build'})
             .on('error', function(err) {

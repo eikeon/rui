@@ -1,6 +1,6 @@
 {
   "name": "qrui",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -22,7 +22,6 @@
     "reactify": "~0.5.1"
   },
   "dependencies": {
-    "handlebars": "^2.0.0-alpha.2",
     "node-jsx": "^0.10.0",
     "send": "^0.3.0"
   }

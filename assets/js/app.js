@@ -4,7 +4,8 @@ var React = require('react'),
     ItemNumber = require('./itemnumber'),
     Previous = require('./previous'),
     Next = require('./next'),
-    $     = require('jquery'),    
+    $     = require('jquery'),
+    Site,
     App;
 
 var Files = [{
@@ -13,10 +14,28 @@ var Files = [{
     "@type": "FileSample"
 }];
 
-    App = React.createClass({    
-        getInitialState: function () {
-            return { files: Files, file: Files[0] };
-        },
+Site = React.createClass({
+    render: function () {
+        return <html id="site">
+  <head>
+    <title>Quality Review</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/site.css" rel="stylesheet" media="screen" />
+  </head>
+  <body id="app">
+    <App url="http://sampler.rdc.lctl.gov/api/sample/39790"/>
+    <script src="/app.js"></script>
+    <script>Site.start();</script>
+  </body>
+</html>;
+    }
+});
+
+App = React.createClass({
+    getInitialState: function () {
+        return { files: Files, file: Files[0] };
+    },
         componentDidMount: function () {            
             $.ajax({
                 url: this.props.url,
@@ -88,12 +107,12 @@ var Files = [{
     }
 });
 
-App.start = function () {
-    React.renderComponent(<App url="http://sampler.rdc.lctl.gov/api/sample/39790"/>, document.getElementById('app'));
+Site.start = function() {
+    React.renderComponent(<Site/>, document.getElementById('site'));
 };
 
 if(typeof window == 'undefined') {
-    module.exports = App;
+    module.exports = Site;
 } else {
-    module.exports = window.App = App;    
+    module.exports = window.Site = Site;
 }

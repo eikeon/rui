@@ -19,7 +19,7 @@ Site = React.createClass({
         return <html id="site">
   <head>
     <title>Quality Review</title>
-    <meta charset="utf-8" />
+    <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/site.css" rel="stylesheet" media="screen" />
   </head>

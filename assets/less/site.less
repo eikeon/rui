@@ -204,10 +204,12 @@ html, body {
 }
 
 .bagitem {
+    position: relative;
+    width: 100%;
     height: 100%;
     .image {
-        position: fixed;
-        top: 75px;
+        position: absolute;
+        top: 50px;
         right: 0px;
         bottom: 0px;
         left: 0px;
@@ -217,31 +219,11 @@ html, body {
         background-position: center center;
         background-repeat: no-repeat no-repeat;
     }
+}
 
-    .previous, .next {
-        position: fixed;
-        width: 50px;
-        height: 75px;
-        text-align: center;
-        vertical-align: middle;
-        left: 0px;
-        right: 0px;
-        display: table-cell;
-    }
-    .previous {
-        margin: auto auto auto 5px;        
-    }
-    .next {
-        margin: auto 5px auto auto;         
-    }
-    .current {
-        position: fixed;
-        width: 50%;
-        height: 75px;
-        text-align: center;
-        margin: 5px auto;
-        left: 0px;
-        right: 0px;
-    }
+.form {
+    padding: 10px;
+    min-width: 300px;
+    max-width: 600px;
 }
 

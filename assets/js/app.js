@@ -115,8 +115,19 @@ Site = React.createClass({
     {prefetch}
   </head>
   <body>
-    <Projects projects={this.state.projects} onChange={this.handleProjectChanged} />
-    <Bags bags={this.state.bags} bag ={this.state.bag} onChange={this.handleBagChanged} />
+    <div className="container-fluid">
+    <h1>Quality Review</h1>
+    <form className="form" role="form">
+      <div className="form-group">
+        <label className="xsr-only" for="project">Project</label>
+        <Projects projects={this.state.projects} onChange={this.handleProjectChanged} />
+      </div>
+      <div className="form-group">
+        <label className="xsr-only" for="bag">Bag</label>
+        <Bags bags={this.state.bags} bag ={this.state.bag} onChange={this.handleBagChanged} />
+      </div>
+    </form>
+    </div>
     <Bag files={this.state.files} file={this.state.file} onItemChanged={this.handleItemChanged}/>
     <script src="/app.js"></script>
     <script>Site.start();</script>

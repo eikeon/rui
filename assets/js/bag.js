@@ -12,16 +12,14 @@ Bag = React.createClass({
             var fs = {backgroundImage: "url("+this.props.file.image_large+")"};
             return <div className="bagitem">
                      <div className="image" style={fs}>
-                     </div>
-                     <div className="previous">
-                       <h1><Previous onItemChanged={this.props.onItemChanged} item={this.props.file} items={this.props.files} /></h1>
-                     </div>
-                     <div className="current">
-                       <ItemNumber file={this.props.file} files={this.props.files} />
-                     </div>
-                     <div className="next">
-                       <h1><Next onItemChanged={this.props.onItemChanged} item={this.props.file} items={this.props.files} /></h1>
-                     </div>
+                </div>
+                <div className="navbar navbar-default">
+                  <div className="container-fluid">
+                  <Previous className="btn btn-default navbar-btn navbar-left" onItemChanged={this.props.onItemChanged} item={this.props.file} items={this.props.files} />
+                  <ItemNumber className="navbar-text" file={this.props.file} files={this.props.files} />
+                <Next className="btn btn-default navbar-btn navbar-right" onItemChanged={this.props.onItemChanged} item={this.props.file} items={this.props.files} />
+                  </div>
+                </div>
                     </div>;
         } else {
             return <div><p>...</p></div>;

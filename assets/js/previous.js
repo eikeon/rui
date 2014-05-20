@@ -9,7 +9,7 @@ Previous = React.createClass({
         }
     },
     render: function () {
-        return <a onClick={this.handleClick} rel="previous"><span className="glyphicon glyphicon-chevron-left"></span></a>;
+        return <button type="button" className={this.props.className} onClick={this.handleClick} rel="previous"><span className="glyphicon glyphicon-chevron-left"></span></button>;
     }
 });
 

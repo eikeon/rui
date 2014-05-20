@@ -9,7 +9,7 @@ Next = React.createClass({
         }
     },
     render: function () {
-        return <a onClick={this.handleClick} rel="next"><span className="glyphicon glyphicon-chevron-right"></span></a>;
+        return <button type="button" className={this.props.className} onClick={this.handleClick} rel="next"><span className="glyphicon glyphicon-chevron-right"></span></button>;
     }
 });
 

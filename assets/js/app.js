@@ -12,6 +12,15 @@ Site = React.createClass({
     getInitialState: function () {
         return { projects: [], project: null, bags: [], bag: null, files: [], file: null };
     },
+    getBagsOfInterest: function() {
+        return this.state.bags.filter(function(bag, i, a) {
+            if (bag.status == null) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    },
     componentDidMount: function () {
         $.ajax({
             url: "http://sampler.rdc.lctl.gov/api",
@@ -30,12 +39,13 @@ Site = React.createClass({
         this.handleBagChanged(null);
         this.setState({project: project});
         $.ajax({
-            url: this.state.project["@id"],
+            url: project["@id"],
             dataType: 'json',
             success: function(data) {
                 var bags = data.bags;
                 this.setState({bags: bags});
-                this.handleBagChanged(bags[0]);
+                var b = this.getBagsOfInterest();
+                this.handleBagChanged(b[0]);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -46,7 +56,7 @@ Site = React.createClass({
         this.setState({bag: bag, files: [], file: null});
         if (bag != null) {
             $.ajax({
-                url: this.state.bag["@id"],
+                url: bag["@id"],
                 dataType: 'json',
                 success: function(data) {
                     var url = data.samples[0]["@id"]

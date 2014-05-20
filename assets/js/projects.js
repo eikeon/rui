@@ -15,7 +15,7 @@ Projects = React.createClass({
     
     render: function () {
         var options = this.props.projects.map(function(project) {
-            return <option value={project.name}>{project.name}</option>
+            return <option key={project.name} value={project.name}>{project.name}</option>
         });
         return <select id="project" className="form-control" value={this.props.project} onChange={this.handleOnChange}>
                  <option value="--">select a project</option>

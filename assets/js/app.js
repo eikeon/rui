@@ -104,7 +104,7 @@ Site = React.createClass({
             links.push(this.state.files[i+1].image_large);
         }
         var prefetch = links.map(function(href) {
-            return <link rel="prefetch" href={href} />;
+            return <link rel="prefetch" href={href} key={href} />;
         });
         return <html id="site">
   <head>

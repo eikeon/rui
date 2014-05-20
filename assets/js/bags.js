@@ -15,7 +15,7 @@ Bags = React.createClass({
     
     render: function () {
         var options = this.props.bags.map(function(bag) {
-            return <option value={bag["@id"]}>{bag["@id"]}</option>
+            return <option key={bag["@id"]} value={bag["@id"]}>{bag["@id"]}</option>
         });
         return <select id="bag" className="form-control" value={this.props.bag} onChange={this.handleOnChange}>
                  {options}

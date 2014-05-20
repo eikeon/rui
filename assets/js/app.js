@@ -10,23 +10,7 @@ var React = require('react'),
 
 Site = React.createClass({
     getInitialState: function () {
-        var Projects = [{
-            "@id": "http://sampler.rdc.lctl.gov/api/project/1",
-            "@type": "Project",
-            "name": "Copyright Card Scanning"
-        }, {
-            "@id": "http://sampler.rdc.lctl.gov/api/project/2",
-            "@type": "Project",
-            "name": "Presidential Papers"
-        },
-                       ];
-
-        var Files = [{
-            "image_large": "http://sampler.rdc.lctl.gov/sample/39790/6837602.jpg",
-            "@id": "http://sampler.rdc.lctl.gov/api/filesample/6837602",
-            "@type": "FileSample"
-        }];
-        return { projects: Projects, project: Projects[0], bags: [], bag: null, files: Files, file: Files[0] };
+        return { projects: [], project: null, bags: [], bag: null, files: [], file: null };
     },
     componentDidMount: function () {
         $.ajax({
@@ -43,15 +27,15 @@ Site = React.createClass({
         window.document.onkeydown = this.handleKeyDown;
     },
     handleProjectChanged: function(project) {
-        this.state.project = project;
-        this.state.bags = [];
-        this.setState(this.state);
+        this.handleBagChanged(null);
+        this.setState({project: project});
         $.ajax({
             url: this.state.project["@id"],
             dataType: 'json',
             success: function(data) {
                 var bags = data.bags;
-                this.setState({bags: bags, bag: bags[0]});
+                this.setState({bags: bags});
+                this.handleBagChanged(bags[0]);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -59,21 +43,21 @@ Site = React.createClass({
         });
     },
     handleBagChanged: function(bag) {
-        this.state.bag = bag;
-        this.state.sample = null;
-        this.setState(this.state);
-        $.ajax({
-            url: this.state.bag["@id"],
-            dataType: 'json',
-            success: function(data) {
-                var url = data.samples[0]["@id"]
-                console.error("URL: " + url);
-                this.getFiles(url);
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        this.setState({bag: bag, files: [], file: null});
+        if (bag != null) {
+            $.ajax({
+                url: this.state.bag["@id"],
+                dataType: 'json',
+                success: function(data) {
+                    var url = data.samples[0]["@id"]
+                    console.error("URL: " + url);
+                    this.getFiles(url);
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        }
     },
     handleKeyDown: function(event) {
         if (event.keyCode == '37') {
@@ -84,8 +68,7 @@ Site = React.createClass({
         }
     },
     handleItemChanged: function(item) {
-        this.state.file = item;
-        this.setState(this.state);
+        this.setState({file: item});
     },
     handleNext: function(event) {
         var i = this.state.files.indexOf(this.state.file);

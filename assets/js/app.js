@@ -99,18 +99,6 @@ Site = React.createClass({
             this.handleItemChanged(this.state.files[i-1]);
         }
     },
-    prefetch: function() {
-        if(typeof window == 'undefined') {
-        } else {
-            $.get(this.state.file.image_large);
-            var i = this.state.files.indexOf(this.state.file);
-            if (i>0) {
-                $.get(this.state.files[i-1].image_large);
-            } else if (i<this.state.files.length-1) {
-                $.get(this.state.files[i+1].image_large);
-            }
-        }
-    },
     getFiles: function(sample_url) {
         $.ajax({
             url: sample_url,
@@ -125,13 +113,23 @@ Site = React.createClass({
         });
     },
     render: function () {
-        this.prefetch();
+        var links = [];
+        var i = this.state.files.indexOf(this.state.file);
+        if (i>0) {
+            links.push(this.state.files[i-1].image_large);
+        } if (i<this.state.files.length-1) {
+            links.push(this.state.files[i+1].image_large);
+        }
+        var prefetch = links.map(function(href) {
+            return <link rel="prefetch" href={href} />;
+        });
         return <html id="site">
   <head>
     <title>Quality Review</title>
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/site.css" rel="stylesheet" media="screen" />
+    {prefetch}
   </head>
   <body>
     <Projects projects={this.state.projects} onChange={this.handleProjectChanged} />

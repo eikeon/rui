@@ -119,12 +119,12 @@ Site = React.createClass({
     <h1>Quality Review</h1>
     <form className="form" role="form">
       <div className="form-group">
-        <label className="xsr-only" for="project">Project</label>
+        <label htmlFor="project">Project</label>
         <Projects projects={this.state.projects} onChange={this.handleProjectChanged} />
       </div>
       <div className="form-group">
-        <label className="xsr-only" for="bag">Bag</label>
-        <Bags bags={this.state.bags} bag ={this.state.bag} onChange={this.handleBagChanged} />
+        <label htmlFor="bag">Bag</label>
+        <Bags bags={this.getBagsOfInterest()} bag ={this.state.bag} onChange={this.handleBagChanged} />
       </div>
     </form>
     </div>

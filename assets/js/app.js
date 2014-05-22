@@ -4,13 +4,14 @@ var React = require('react'),
     Projects = require('./projects'),
     Bags = require('./bags'),
     Bag = require('./bag'),
+    Preview = require('./preview'),
     $     = require('jquery'),
     Site;
 
 
 Site = React.createClass({
     getInitialState: function () {
-        return { projects: [], project: null, bags: [], bag: null, files: [], file: null };
+        return { projects: [], project: null, bags: [], bag: null, files: [], file: null, preview: false };
     },
     getBagsOfInterest: function() {
         return this.state.bags.filter(function(bag, i, a) {
@@ -105,6 +106,9 @@ Site = React.createClass({
             }.bind(this)
         });
     },
+    togglePreview: function(event) {
+        this.setState({preview: !this.state.preview});
+    },
     render: function () {
         var links = [];
         var i = this.state.files.indexOf(this.state.file);
@@ -116,6 +120,10 @@ Site = React.createClass({
         var prefetch = links.map(function(href) {
             return <link rel="prefetch" href={href} key={href} />;
         });
+        var preview = <div/>;
+        if (this.state.preview) {
+            preview = <Preview files={this.state.files} file={this.state.file} />
+        }
         return <html id="site">
   <head>
     <title>Quality Review</title>
@@ -125,6 +133,11 @@ Site = React.createClass({
     {prefetch}
   </head>
   <body>
+    <div className="navbar navbar-default">
+      <div className="container-fluid">
+        <button type="button" className="btn btn-default navbar-btn" onClick={this.togglePreview}>toggle preview</button>
+      </div>
+    </div>
     <div className="container-fluid">
     <h1>Quality Review</h1>
     <form className="form" role="form">
@@ -138,6 +151,7 @@ Site = React.createClass({
       </div>
     </form>
     </div>
+    {preview}
     <Bag files={this.state.files} file={this.state.file} onItemChanged={this.handleItemChanged}/>
     <script src="/app.js"></script>
     <script>Site.start();</script>

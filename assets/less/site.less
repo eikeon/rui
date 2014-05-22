@@ -227,3 +227,21 @@ html, body {
     max-width: 600px;
 }
 
+.preview {
+    display: -webkit-flex;
+    -webkit-flex-flow: row wrap;
+    -webkit-align-items: center;
+    -webkit-justify-content: center;
+    width: 100%;
+    .image {
+        display:table-cell;
+        vertical-align:middle;
+        text-align:center;
+        min-width: 200px;
+        margin: 0px;
+        flex: 1 1 0;
+    }
+    .current img {
+        border: 3px solid black;
+    }
+}

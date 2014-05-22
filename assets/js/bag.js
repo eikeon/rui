@@ -1,6 +1,5 @@
 /** @jsx React.DOM */
 var React = require('react'),
-    $     = require('jquery'),
     ItemNumber = require('./itemnumber'),
     Previous = require('./previous'),
     Next = require('./next'),

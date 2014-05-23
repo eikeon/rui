@@ -7,9 +7,9 @@ var React = require('react'),
     Preview = require('./preview'),
     Breadcrumbs = require('./breadcrumbs'),
     $     = require('jquery'),
-    Site;
+    App;
 
-Site = React.createClass({
+App = React.createClass({
     getInitialState: function () {
         return { projects: [], project: null, bags: [], bag: null, files: [], file: null, preview: false, chooseProject: false };
     },
@@ -182,22 +182,10 @@ Site = React.createClass({
     {select_project_bag}
     {preview}
     <Bag files={this.state.files} file={this.state.file} onItemChanged={this.handleItemChanged}/>
-    <script src="/app.js"></script>
-    <script>Site.start();</script>
+    <script src="/site.js"></script>
   </body>
 </html>;
     }
 });
 
-Site.start = function() {
-    React.renderComponent(<Site/>, document.getElementById('site'));
-};
-
-if(typeof window == 'undefined') {
-    module.exports = Site;
-} else {
-    module.exports = window.Site = Site;
-    window.React = React;
-    window.jQuery = $
-    require('../../bower_components/bootstrap/dist/js/bootstrap.min');
-}
+module.exports = App;

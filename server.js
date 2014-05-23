@@ -4,12 +4,12 @@ var http = require('http'),
     send = require('send'),
     url = require('url'),
     React = require('react'),
-    MyApp = require('./assets/js/app.js');
+    QRApp = require('./assets/js/app.js');
 
 exports = module.exports = function (req, res) {
     if (req.url == '/') {
         res.setHeader('Content-Type', 'text/html');
-        res.end("<!DOCTYPE html>" + React.renderComponentToStaticMarkup(MyApp({})));
+        res.end("<!DOCTYPE html>" + React.renderComponentToStaticMarkup(QRApp({})));
     } else {
         send(req, url.parse(req.url).pathname, {root: './build'})
             .on('error', function(err) {

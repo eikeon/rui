@@ -17,7 +17,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('scripts', function () {
-    gulp.src(['assets/js/app.js'])
+    gulp.src(['assets/js/site.js'])
         .pipe(browserify({
             debug: true,
             transform: [ 'reactify' ]

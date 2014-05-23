@@ -41,7 +41,7 @@ Preview = React.createClass({
                     break;
                 }
                 var img = this.props.files[i+j].image_small;
-                files.push(<div key={img} className={j==0 ? 'image current' : 'image'} ><img src={img}></img></div>);
+                files.push(<div key={img} className={j==0 ? 'image current' : 'image'} ><img src={img} className="img-thumbnail"></img></div>);
             }
             return <div className="preview" ref="preview">
                      {files}

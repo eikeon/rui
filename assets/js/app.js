@@ -5,13 +5,13 @@ var React = require('react'),
     Bags = require('./bags'),
     Bag = require('./bag'),
     Preview = require('./preview'),
+    Breadcrumbs = require('./breadcrumbs'),
     $     = require('jquery'),
     Site;
 
-
 Site = React.createClass({
     getInitialState: function () {
-        return { projects: [], project: null, bags: [], bag: null, files: [], file: null, preview: false };
+        return { projects: [], project: null, bags: [], bag: null, files: [], file: null, preview: false, chooseProject: false };
     },
     getBagsOfInterest: function() {
         return this.state.bags.filter(function(bag, i, a) {
@@ -28,7 +28,7 @@ Site = React.createClass({
             dataType: 'json',
             success: function(data) {
                 var projects = data;
-                this.setState({projects: projects, project: projects[0]});
+                this.setState({projects: projects});
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -38,20 +38,22 @@ Site = React.createClass({
     },
     handleProjectChanged: function(project) {
         this.handleBagChanged(null);
-        this.setState({project: project});
-        $.ajax({
-            url: project["@id"],
-            dataType: 'json',
-            success: function(data) {
-                var bags = data.bags;
-                this.setState({bags: bags});
-                var b = this.getBagsOfInterest();
-                this.handleBagChanged(b[0]);
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        this.setState({project: project, bags: []});
+        if (project != null) {
+            $.ajax({
+                url: project["@id"],
+                dataType: 'json',
+                success: function(data) {
+                    var bags = data.bags;
+                    this.setState({bags: bags});
+                    var b = this.getBagsOfInterest();
+                    this.handleBagChanged(b[0]);
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        }
     },
     handleBagChanged: function(bag) {
         this.setState({bag: bag, files: [], file: null});
@@ -109,6 +111,9 @@ Site = React.createClass({
     togglePreview: function(event) {
         this.setState({preview: !this.state.preview});
     },
+    toggleChooseProject: function(event) {
+        this.setState({chooseProject: !this.state.chooseProject});
+    },
     render: function () {
         var links = [];
         var i = this.state.files.indexOf(this.state.file);
@@ -120,9 +125,32 @@ Site = React.createClass({
         var prefetch = links.map(function(href) {
             return <link rel="prefetch" href={href} key={href} />;
         });
-        var preview = <div/>;
+        var preview = null;
         if (this.state.preview) {
             preview = <Preview files={this.state.files} file={this.state.file} />
+        }
+        var bags = null;
+        if (this.getBagsOfInterest().length > 0) {
+            bags = <div className="form-group">
+                <label htmlFor="bag">Bag</label>
+                <Bags bags={this.getBagsOfInterest()} bag={this.state.bag} onChange={this.handleBagChanged} />
+                </div>;
+        } else {
+            if (this.state.project != null) {
+                bags = <div>no bags to review</div>;
+            }
+        }
+        var select_project_bag = null;
+        if (this.state.project == null || this.state.chooseProject) {
+            select_project_bag = <div className="container-fluid">
+                                   <form className="form" role="form">
+                                     <div className="form-group">
+                                       <label htmlFor="project">Project</label>
+                                       <Projects projects={this.state.projects} project={this.state.project} onChange={this.handleProjectChanged} />
+                                       {bags}
+                                     </div>
+                                   </form>
+                                 </div>;
         }
         return <html id="site">
   <head>
@@ -133,24 +161,25 @@ Site = React.createClass({
     {prefetch}
   </head>
   <body>
-    <div className="navbar navbar-default">
+    <nav className="navbar navbar-default" role="navigation">
       <div className="container-fluid">
-        <button type="button" className="btn btn-default navbar-btn" onClick={this.togglePreview}>toggle preview</button>
+        <div className="navbar-header">
+          <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span className="sr-only">Toggle navigation</span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
+          </button>
+          <a className="navbar-brand" href="/">Quality Review</a>
+        </div>
+        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <button type="button" className="btn btn-default navbar-btn" onClick={this.togglePreview}>toggle preview</button>
+          <button type="button" className="btn btn-default navbar-btn" onClick={this.toggleChooseProject}>toggle Choose Project</button>
+        </div>
       </div>
-    </div>
-    <div className="container-fluid">
-    <h1>Quality Review</h1>
-    <form className="form" role="form">
-      <div className="form-group">
-        <label htmlFor="project">Project</label>
-        <Projects projects={this.state.projects} onChange={this.handleProjectChanged} />
-      </div>
-      <div className="form-group">
-        <label htmlFor="bag">Bag</label>
-        <Bags bags={this.getBagsOfInterest()} bag ={this.state.bag} onChange={this.handleBagChanged} />
-      </div>
-    </form>
-    </div>
+    </nav>
+    <Breadcrumbs project={this.state.project} bag={this.state.bag} files={this.state.files} file={this.state.file} />
+    {select_project_bag}
     {preview}
     <Bag files={this.state.files} file={this.state.file} onItemChanged={this.handleItemChanged}/>
     <script src="/app.js"></script>
@@ -169,4 +198,6 @@ if(typeof window == 'undefined') {
 } else {
     module.exports = window.Site = Site;
     window.React = React;
+    window.jQuery = $
+    require('../../bower_components/bootstrap/dist/js/bootstrap.min');
 }

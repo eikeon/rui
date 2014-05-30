@@ -56,11 +56,11 @@ gulp.task('build', ['styles', 'less', 'scripts', 'images', 'bootstrap' ]);
 
 gulp.task('webserver', function() {
      var app = connect()
-             .use(connect.logger('dev'))
-             .use(connect.static('public'))
+             .use(require('morgan')('dev'))
+             .use(require('serve-static')('public'))
              .use(handler);
 
-     http.createServer(app).listen(3000);    
+    http.createServer(app).listen(3000);
 });
 
 gulp.task('default', ['build', 'webserver', 'watch']);

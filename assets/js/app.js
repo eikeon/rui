@@ -1,17 +1,23 @@
 /** @jsx React.DOM */
 
 var React = require('react'),
-    Projects = require('./projects'),
+    Select = require('./select'),
     Bags = require('./bags'),
-    Bag = require('./bag'),
-    Preview = require('./preview'),
+    Image = require('./image'),
+    ItemNumber = require('./itemnumber'),
+    Previous = require('./previous'),
+    Next = require('./next'),
     Breadcrumbs = require('./breadcrumbs'),
+    Preview = require('./preview'),
     $     = require('jquery'),
     App;
 
 App = React.createClass({
     getInitialState: function () {
-        return { projects: [], project: null, bags: [], bag: null, files: [], file: null, preview: false, chooseProject: false };
+        return { projects: [], project: null, bags: [], bag: null, files: [], file: null, preview: false};
+    },
+    togglePreview: function(event) {
+        this.setState({preview: !this.state.preview});
     },
     getBagsOfInterest: function() {
         return this.state.bags.filter(function(bag, i, a) {
@@ -108,11 +114,8 @@ App = React.createClass({
             }.bind(this)
         });
     },
-    togglePreview: function(event) {
-        this.setState({preview: !this.state.preview});
-    },
-    toggleChooseProject: function(event) {
-        this.setState({chooseProject: !this.state.chooseProject});
+    selectProject: function(event) {
+        this.handleProjectChanged(null);
     },
     render: function () {
         var links = [];
@@ -125,33 +128,31 @@ App = React.createClass({
         var prefetch = links.map(function(href) {
             return <link rel="prefetch" href={href} key={href} />;
         });
+        var crumbs = [];
+        crumbs.push(<Select type="project" items={this.state.projects} item={this.state.project} onChange={this.handleProjectChanged} />);
+        crumbs.push(' ');
+        if (this.state.project != null) {
+            crumbs.push(<Select type="bag" items={this.state.bags} item={this.state.bag} onChange={this.handleBagChanged} />);
+            crumbs.push(' ');
+            if (this.state.bag != null) {
+                crumbs.push(<div className="btn-group">
+                              <Previous className="btn btn-default navbar-btn navbar-left" onItemChanged={this.handleItemChanged} item={this.state.file} items={this.state.files} />
+                              <ItemNumber className="navbar-text" file={this.state.file} files={this.state.files} />
+                              <Next className="btn btn-default navbar-btn navbar-left" onItemChanged={this.handleItemChanged} item={this.state.file} items={this.state.files} />
+                            </div>);
+                crumbs.push(' ');
+                crumbs.push(<button type="button" className="btn btn-default navbar-btn" onClick={this.togglePreview}>toggle preview</button>);
+                }
+        }
         var preview = null;
         if (this.state.preview) {
             preview = <Preview files={this.state.files} file={this.state.file} />
         }
-        var bags = null;
-        if (this.getBagsOfInterest().length > 0) {
-            bags = <div className="form-group">
-                <label htmlFor="bag">Bag</label>
-                <Bags bags={this.getBagsOfInterest()} bag={this.state.bag} onChange={this.handleBagChanged} />
-                </div>;
-        } else {
-            if (this.state.project != null) {
-                bags = <div>no bags to review</div>;
-            }
+
+        var navItems = [];
+        if (this.state.file) {
         }
-        var select_project_bag = null;
-        if (this.state.project == null || this.state.chooseProject) {
-            select_project_bag = <div className="container-fluid">
-                                   <form className="form" role="form">
-                                     <div className="form-group">
-                                       <label htmlFor="project">Project</label>
-                                       <Projects projects={this.state.projects} project={this.state.project} onChange={this.handleProjectChanged} />
-                                       {bags}
-                                     </div>
-                                   </form>
-                                 </div>;
-        }
+
         return <html id="site">
   <head>
     <title>Quality Review</title>
@@ -161,27 +162,12 @@ App = React.createClass({
     {prefetch}
   </head>
   <body>
-    <nav className="navbar navbar-default" role="navigation">
-      <div className="container-fluid">
-        <div className="navbar-header">
-          <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-          </button>
-          <a className="navbar-brand" href="/">Quality Review</a>
-        </div>
-        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <button type="button" className="btn btn-default navbar-btn" onClick={this.togglePreview}>toggle preview</button>
-          <button type="button" className="btn btn-default navbar-btn" onClick={this.toggleChooseProject}>toggle Choose Project</button>
-        </div>
-      </div>
-    </nav>
-    <Breadcrumbs project={this.state.project} bag={this.state.bag} files={this.state.files} file={this.state.file} />
-    {select_project_bag}
+    <div className="top">
+      <a className="navbar-brand" href="/">Quality Review</a>
+      <Breadcrumbs>{crumbs}</Breadcrumbs>
+    </div>
     {preview}
-    <Bag files={this.state.files} file={this.state.file} onItemChanged={this.handleItemChanged}/>
+    <Image bag={this.state.bag} files={this.state.files} file={this.state.file} onItemChanged={this.handleItemChanged}/>
     <script src="/site.js"></script>
   </body>
 </html>;

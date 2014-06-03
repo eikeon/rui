@@ -19,7 +19,7 @@ Select = React.createClass({
     },
     render: function () {
         var options = this.props.items.map(function(item) {
-            return <option key={item.name} value={item.name}>{item.name}</option>
+            return <option key={item["@id"]} value={item.name}>{item.name}</option>
         });
         var value = "";
         if (this.props.item != null) {

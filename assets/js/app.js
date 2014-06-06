@@ -7,17 +7,19 @@ var React = require('react'),
     ItemNumber = require('./itemnumber'),
     Previous = require('./previous'),
     Next = require('./next'),
-    Breadcrumbs = require('./breadcrumbs'),
     Preview = require('./preview'),
     $     = require('jquery'),
     App;
 
 App = React.createClass({
     getInitialState: function () {
-        return { projects: [], project: null, bags: [], bag: null, files: [], file: null, preview: false};
+        return { projects: [], project: null, bags: [], bag: null, files: [], file: null, preview: false, landscape: false};
     },
     togglePreview: function(event) {
         this.setState({preview: !this.state.preview});
+    },
+    toggleLandscape: function(event) {
+        this.setState({landscape: !this.state.landscape});
     },
     getBagsOfInterest: function() {
         return this.state.bags.filter(function(bag, i, a) {
@@ -130,17 +132,14 @@ App = React.createClass({
         });
         var crumbs = [];
         crumbs.push(<Select type="project" items={this.state.projects} item={this.state.project} onChange={this.handleProjectChanged} />);
-        crumbs.push(' ');
         if (this.state.project != null) {
             crumbs.push(<Select type="bag" items={this.state.bags} item={this.state.bag} onChange={this.handleBagChanged} />);
-            crumbs.push(' ');
             if (this.state.bag != null) {
-                crumbs.push(<div className="btn-group">
-                              <Previous className="btn btn-default navbar-btn navbar-left" onItemChanged={this.handleItemChanged} item={this.state.file} items={this.state.files} />
-                              <ItemNumber className="navbar-text" file={this.state.file} files={this.state.files} />
-                              <Next className="btn btn-default navbar-btn navbar-left" onItemChanged={this.handleItemChanged} item={this.state.file} items={this.state.files} />
+                crumbs.push(<div>
+                              <Previous className="btn btn-default navbar-btn" onItemChanged={this.handleItemChanged} item={this.state.file} items={this.state.files} />
+                              <ItemNumber file={this.state.file} files={this.state.files} />
+                              <Next className="btn btn-default navbar-btn" onItemChanged={this.handleItemChanged} item={this.state.file} items={this.state.files} />
                             </div>);
-                crumbs.push(' ');
                 crumbs.push(<button type="button" className="btn btn-default navbar-btn" onClick={this.togglePreview}>toggle preview</button>);
                 }
         }
@@ -152,7 +151,10 @@ App = React.createClass({
         var navItems = [];
         if (this.state.file) {
         }
-
+        var bodyClass = "";
+        if (this.state.landscape) {
+            bodyClass = "landscape";
+        }
         return <html id="site">
   <head>
     <title>Quality Review</title>
@@ -161,10 +163,10 @@ App = React.createClass({
     <link href="/css/site.css" rel="stylesheet" media="screen" />
     {prefetch}
   </head>
-  <body>
+  <body className={bodyClass}>
     <div className="top">
-      <a className="navbar-brand" href="/">Quality Review</a>
-      <Breadcrumbs>{crumbs}</Breadcrumbs>
+      <a className="navbar-brand" onClick={this.toggleLandscape}>Quality Review</a>
+      {crumbs}
     </div>
     {preview}
     <Image bag={this.state.bag} files={this.state.files} file={this.state.file} onItemChanged={this.handleItemChanged}/>

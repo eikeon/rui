@@ -1,5 +1,10 @@
 @import "bower_components/bootstrap/less/bootstrap.less";
 
+.navbar-btn {
+   margin-left: 4px;
+   margin-right: 4px;
+}
+
 html, body {
     height: 100%;
 }
@@ -24,8 +29,33 @@ body {
         background-position: center center;
         background-repeat: no-repeat no-repeat;
     }
+    .top {
+        display: -webkit-flex;
+        -webkit-flex-flow: row wrap;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+        -webkit-flex: 0 1 auto;
+        min-width: 200px;
+    }
     .current img {
         border: 3px solid black;
+    }
+}
+
+body.landscape {
+    -webkit-flex-flow: row;
+    > .image {
+        min-width: 50%;
+        min-height: 100%;
+    }
+    .top {
+        display: -webkit-flex;
+        -webkit-flex-flow: column;
+        -webkit-flex: 0 1 auto;
+        min-width: 200px;
+    }
+    .preview {
+        min-width: 600px;
     }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "qrui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "gulp": "^3.6.2",
     "gulp-browserify": "^0.5.0",
     "gulp-concat": "^2.2.0",
-    "gulp-imagemin": "^0.5.0",
+    "gulp-imagemin": "^0.6.1",
     "gulp-less": "^1.2.3",
     "gulp-react": "^0.3.3",
     "reactify": "^0.13.1"
@@ -20,7 +20,7 @@
   "dependencies": {
     "connect": "^3.0.0",
     "director": "^1.2.3",
-    "envify": "^1.2.1",
+    "envify": "^2.0.0",
     "jquery": "^2.1.1",
     "morgan": "^1.1.1",
     "node-jsx": "^0.10.0",

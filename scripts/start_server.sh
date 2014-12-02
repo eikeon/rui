@@ -1,3 +1,3 @@
 #!/bin/bash
-gulp
+cd /var/rui; gulp
 

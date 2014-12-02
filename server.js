@@ -9,7 +9,7 @@ var http = require('http'),
 exports = module.exports = function (req, res) {
     if (req.url == '/') {
         res.setHeader('Content-Type', 'text/html');
-        res.end("<!DOCTYPE html>" + React.renderComponentToStaticMarkup(QRApp({})));
+        res.end("<!DOCTYPE html>" + React.renderToStaticMarkup(React.createElement(QRApp, {})));
     } else {
         send(req, url.parse(req.url).pathname, {root: './build'})
             .on('error', function(err) {

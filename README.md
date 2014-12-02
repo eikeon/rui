@@ -1,9 +1,9 @@
-qrui
+rui
 ====
 
-Quality Review User Interface
+Reactive User Interface
 
-## Running [![node deps](https://david-dm.org/loc-rdc/qrui.png)](https://david-dm.org/loc-rdc/qrui)
+## Running [![node deps](https://david-dm.org/eikeon/rui.png)](https://david-dm.org/eikeon/rui)
 
 ```
 npm install -g bower gulp

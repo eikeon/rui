@@ -18,14 +18,14 @@
     "reactify": "^0.13.1"
   },
   "dependencies": {
-    "connect": "^3.0.0",
+    "connect": "^3.3.3",
     "director": "^1.2.3",
-    "envify": "^2.0.0",
+    "envify": "^3.2.0",
     "jquery": "^2.1.1",
-    "morgan": "^1.1.1",
-    "node-jsx": "^0.10.0",
-    "react": "^0.10.0",
-    "send": "^0.4.0",
-    "serve-static": "^1.2.0"
+    "morgan": "^1.5.0",
+    "node-jsx": "^0.12.4",
+    "react": "^0.12.1",
+    "send": "^0.10.1",
+    "serve-static": "^1.7.1"
   }
 }
